@@ -1,9 +1,9 @@
-# 🛡️ IT Incident Hub - Semana 1
+﻿# 🛡️ IT Incident Hub - Semana 2 (CI, Calidad, Seguridad y Deuda TÃ©cnica)
 
-> **Proyecto Integrador DevOps** | Entrega Parcial Semana 1  
+> **Proyecto Integrador DevOps** | Entrega Parcial Semana 2 (CI, Calidad, Seguridad y Deuda TÃ©cnica)  
 > **Universidad:** UMG - Análisis de Sistemas II  
 > **Organización Azure DevOps:** `DevOps-UMG-Mayro` | **Proyecto:** `incident-hub`  
-> **Repositorio Oficial:** [MayroGamerosXZ/Incident-hub-w1](https://github.com/MayroGamerosXZ/Incident-hub-w1)
+> **Repositorio Oficial:** [MayroGamerosXZ/Incident-hub-w2](https://github.com/MayroGamerosXZ/Incident-hub-w2)
 
 ---
 
