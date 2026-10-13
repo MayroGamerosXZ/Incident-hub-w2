@@ -9,6 +9,9 @@ const {
   canTransitionStatus,
   computeDashboardMetrics
 } = require('../backend/src/services/workflowService.js');
+const {
+  sanitizeInputString
+} = require('../backend/src/middleware/securityMiddleware.js');
 
 test('Suite de Pruebas Unitarias e Integracion - IT Incident Hub (AB#24)', async (t) => {
 
@@ -25,15 +28,54 @@ test('Suite de Pruebas Unitarias e Integracion - IT Incident Hub (AB#24)', async
       reported_by: 'admin@empresa.com'
     });
     assert.strictEqual(validRes.valid, true);
+    assert.strictEqual(validRes.errors.length, 0);
+
+    const invalidRes = validateCreateIncident({
+      title: 'Corto',
+      description: 'Corto',
+      category: 'INVALID_CAT',
+      reported_by: 'correo_invalido'
+    });
+    assert.strictEqual(invalidRes.valid, false);
+    assert.ok(invalidRes.errors.length >= 3);
   });
 
-  await t.test('3. [FALLO CONTROLADO] Validar conteo de incidentes criticos en Dashboard (AB#22)', () => {
-    const mockIncidents = [
-      { id: 1, status: 'EN_PROCESO', priority: 'CRITICA', category: 'SOFTWARE', assigned_to_id: 1 }
+  await t.test('3. Validar motor de filtros por estado, prioridad, categoria y tecnico (AB#11)', () => {
+    const sample = [
+      { id: 1, title: 'Switch caido', description: 'Red', status: 'ASIGNADO', priority: 'ALTA', category: 'NETWORK', assigned_to_id: 2, reported_by: 'a@b.com' },
+      { id: 2, title: 'DB lenta', description: 'SQL', status: 'EN_PROCESO', priority: 'CRITICA', category: 'SOFTWARE', assigned_to_id: 4, reported_by: 'c@d.com' }
     ];
-    const stats = computeDashboardMetrics(mockIncidents, [{ id: 1, name: 'Tech 1' }]);
-    // ERROR INTENCIONAL PARA EVIDENCIA DE FALLO CONTROLADO EN PIPELINE:
-    // El valor real de criticos es 1, pero se compara contra -1 provocando ERR_ASSERTION
-    assert.strictEqual(stats.criticos, -1, 'Fallo controlado: Discrepancia en umbral de incidentes criticos');
+    const byTech = filterIncidentsList(sample, { assigned_to_id: 4 });
+    assert.strictEqual(byTech.length, 1);
+    assert.strictEqual(byTech[0].id, 2);
+  });
+
+  await t.test('4. Validar reglas de transicion de estados (AB#15)', () => {
+    assert.strictEqual(canTransitionStatus('NUEVO', 'ASIGNADO'), true);
+    assert.strictEqual(canTransitionStatus('EN_PROCESO', 'RESUELTO'), true);
+    assert.strictEqual(canTransitionStatus('CERRADO', 'NUEVO'), false);
+  });
+
+  await t.test('5. Validar calculo corregido de metricas del Dashboard (Fix Fallo Controlado AB#22)', () => {
+    const mockIncidents = [
+      { id: 1, status: 'NUEVO', priority: 'ALTA', category: 'NETWORK', assigned_to_id: 1 },
+      { id: 2, status: 'EN_PROCESO', priority: 'CRITICA', category: 'SOFTWARE', assigned_to_id: 1 },
+      { id: 3, status: 'CERRADO', priority: 'BAJA', category: 'HARDWARE', assigned_to_id: 2 }
+    ];
+    const mockUsers = [
+      { id: 1, name: 'Tech 1' },
+      { id: 2, name: 'Tech 2' }
+    ];
+    const stats = computeDashboardMetrics(mockIncidents, mockUsers);
+    assert.strictEqual(stats.total, 3);
+    assert.strictEqual(stats.abiertos, 2);
+    assert.strictEqual(stats.cerrados, 1);
+    assert.strictEqual(stats.criticos, 1);
+  });
+
+  await t.test('6. Validar sanitizacion de seguridad contra XSS (Deuda Tecnica DT-1 AB#27)', () => {
+    const dirty = '<script>alert("xss")</script>Fallo en servidor';
+    const clean = sanitizeInputString(dirty);
+    assert.strictEqual(clean, 'Fallo en servidor');
   });
 });
