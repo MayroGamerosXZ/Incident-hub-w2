@@ -1,35 +1,51 @@
-﻿# 🛡️ IT Incident Hub - Semana 2 (CI, Calidad, Seguridad y Deuda TÃ©cnica)
+# 🛡️ IT Incident Hub - Release Oficial v1.0.0 (Semana 3)
 
-> **Proyecto Integrador DevOps** | Entrega Parcial Semana 2 (CI, Calidad, Seguridad y Deuda TÃ©cnica)  
+[![CI Pull Request Validation](https://github.com/MayroGamerosXZ/Incident-hub-w3/actions/workflows/ci.yml/badge.svg)](https://github.com/MayroGamerosXZ/Incident-hub-w3/actions)
+[![Azure Pipelines](https://dev.azure.com/DevOps-UMG-Mayro/incident-hub/_apis/build/status/2?branchName=main)](https://dev.azure.com/DevOps-UMG-Mayro/incident-hub/_build/results?buildId=12)
+[![SemVer](https://img.shields.io/badge/SemVer-v1.0.0--production-blue.svg)](https://github.com/MayroGamerosXZ/Incident-hub-w3/releases/tag/v1.0.0)
+[![Azure Boards](https://img.shields.io/badge/Azure%20Boards-AB%234%20a%20AB%2334%20(100%25%20Closed)-brightgreen.svg)](https://dev.azure.com/DevOps-UMG-Mayro/incident-hub/_boards)
+
+> **Proyecto Integrador DevOps** | Entrega Final Consolidada (Semana 3 - Production Ready)  
 > **Universidad:** UMG - Análisis de Sistemas II  
 > **Organización Azure DevOps:** `DevOps-UMG-Mayro` | **Proyecto:** `incident-hub`  
-> **Repositorio Oficial:** [MayroGamerosXZ/Incident-hub-w2](https://github.com/MayroGamerosXZ/Incident-hub-w2)
+> **Repositorio Oficial de Producción:** [MayroGamerosXZ/Incident-hub-w3](https://github.com/MayroGamerosXZ/Incident-hub-w3)
 
 ---
 
-## 👥 Equipo de Ingeniería y Roles Asignados
+## 📂 Repositorios Oficiales del Ciclo de Vida (Semanas 1, 2 y 3)
 
-Para garantizar el cumplimiento de las normas DevOps de trazabilidad y gobernanza de código, las responsabilidades se distribuyen formalmente entre 6 áreas técnicas:
+| Semana | Hito DevOps | Repositorio Oficial en GitHub | Tag SemVer | Estado |
+|---|---|---|---|---|
+| **Semana 1** | Planificación, Arquitectura, Modelo PostgreSQL, CRUD y 7 PRs | [MayroGamerosXZ/Incident-hub-w1](https://github.com/MayroGamerosXZ/Incident-hub-w1) | `v0.1.0` | 🟢 Congelado |
+| **Semana 2** | CI/CD Dual, Self-Hosted Agent, 2 Deudas Técnicas Resueltas y Fallo Controlado | [MayroGamerosXZ/Incident-hub-w2](https://github.com/MayroGamerosXZ/Incident-hub-w2) | `v0.2.0` | 🟢 Completado |
+| **Semana 3** | **Release de Producción:** Estabilización, SemVer v1.0.0, Artefactos y Estrategia CD | [MayroGamerosXZ/Incident-hub-w3](https://github.com/MayroGamerosXZ/Incident-hub-w3) | `v1.0.0` | 🟢 En Producción |
+
+---
+
+## 👥 Equipo de Ingeniería y Roles Asignados (Regla 9)
+
+Para garantizar el cumplimiento de las normas DevOps de trazabilidad y gobernanza de código (Regla 9), las responsabilidades se distribuyen formalmente entre 6 áreas técnicas:
 
 | Rol / Área | Responsable Oficial | Git Author / Usuario | Responsabilidad Principal |
 |---|---|---|---|
-| **DevOps & Cloud Lead** | **Mayro Geovanni Barrios Gameros** (`@MayroGamerosXZ`) | `devops.lead@incidents.local` | Liderazgo del proyecto, Azure Pipelines, GitHub Actions, Docker y Self-hosted agent. |
-| **Backend Engineer** | Carlos Mendoza | `backend.dev@incidents.local` | API REST Node.js/Express, controladores y lógica de negocio. |
-| **Frontend UI/UX Dev** | Sofia Gomez | `frontend.dev@incidents.local` | Interfaz React (Vite), estado reactivo y dashboard de incidentes. |
-| **Database Architect** | Diego Ramirez | `database.admin@incidents.local` | Esquema relacional PostgreSQL, scripts DDL y persistencia. |
-| **QA & Test Specialist** | Laura Torres | `qa.tester@incidents.local` | Suite de pruebas unitarias/integración en Jest y control de fallos. |
-| **SecOps & Quality Auditor** | Andres Morales | `secops.audit@incidents.local` | Auditoría de dependencias (`npm audit`), deuda técnica y SemVer. |
+| **DevOps & Cloud Lead** | **Mayro Geovanni Barrios Gameros** (`@MayroGamerosXZ`) | `devops.lead@incidents.local` | Liderazgo del proyecto, Azure Pipelines, GitHub Actions, Docker, Self-Hosted Agent y Release Management. |
+| **Backend Engineer** | Carlos Mendoza | `backend.dev@incidents.local` | API REST Node.js/Express, controladores, lógica de negocio y filtros multicriterio. |
+| **Frontend UI/UX Dev** | Sofia Gomez | `frontend.dev@incidents.local` | Interfaz React 18 (Vite), componentes reactivos, modales y panel KPI. |
+| **Database Architect** | Diego Ramirez | `database.admin@incidents.local` | Esquema relacional PostgreSQL, scripts DDL, triggers de auditoría y persistencia. |
+| **QA & Test Specialist** | Laura Torres | `qa.tester@incidents.local` | Suite de pruebas unitarias/integración automatizadas y diagnóstico de fallo controlado. |
+| **SecOps & Quality Auditor** | Andres Morales | `secops.audit@incidents.local` | Auditoría de dependencias (`npm audit`), deuda técnica (DT-1, DT-2) y SemVer. |
 
 ---
 
 ## 🏗️ Arquitectura de la Solución
 
-* **Frontend:** React 18 SPA con Vite (compilación estática ultrarrápida en `dist/`).
-* **Backend:** Node.js con Express, arquitectura por capas (rutas, controladores, modelos).
-* **Persistencia:** PostgreSQL con esquemas relacionales, triggers de auditoría y relaciones foráneas.
-* **Integración Continua:**
-  * **Azure Pipelines (`azure-pipelines.yml`):** Compilación, pruebas unitarias, escaneo de dependencias y empaquetado de artefactos (`drop`).
+* **Frontend:** React 18 SPA con Vite (compilación estática optimizada en `frontend/dist/`).
+* **Backend:** Node.js con Express, arquitectura desacoplada por capas (rutas, controladores, middleware, servicios).
+* **Persistencia:** PostgreSQL con esquemas relacionales, triggers de auditoría temporal y vistas analíticas.
+* **Integración y Entrega Continua Dual:**
+  * **Azure Pipelines (`azure-pipelines.yml`):** Compilación, verificación en **Self-Hosted Agent**, pruebas unitarias, escaneo SCA de dependencias y publicación del artefacto `incident-hub-drop`.
   * **GitHub Actions (`.github/workflows/ci.yml`):** Validación estática (linting) y escaneo de vulnerabilidades en cada Pull Request.
+* **Seguridad y Secretos (Regla 9):** Variables protegidas bajo candado en **Azure Pipelines Library (`incident-hub-secrets`)** para credenciales de base de datos y tokens, garantizando cero secretos en código.
 
 ---
 
@@ -39,27 +55,29 @@ Para garantizar el cumplimiento de las normas DevOps de trazabilidad y gobernanz
 incident-hub/
 ├── .github/
 │   └── workflows/
-│       └── ci.yml               # Workflow de validación para Pull Requests
+│       └── ci.yml               # Workflow de validación para Pull Requests (GitHub Actions)
 ├── backend/                     # API REST Node.js + Express
 │   ├── src/
-│   │   ├── controllers/
-│   │   ├── routes/
-│   │   └── db.js
+│   │   ├── controllers/         # Controladores de lógica de incidentes y métricas
+│   │   ├── middleware/          # Sanitización XSS (DT-1) y Manejador de Errores (DT-2)
+│   │   ├── routes/              # Endpoints REST
+│   │   ├── services/            # Servicios de flujo de estados y KPIs
+│   │   └── db.js                # Pool de conexión PostgreSQL
 │   ├── package.json
 │   └── server.js
-├── frontend/                    # Cliente Web React + Vite
+├── frontend/                    # Cliente Web React 18 + Vite
 │   ├── src/
-│   │   ├── components/
-│   │   ├── App.jsx
+│   │   ├── components/          # IncidentFilters, DistributionPanel, etc.
+│   │   ├── App.jsx              # Vista principal con KPIs y gestión de estados
 │   │   └── main.jsx
 │   ├── index.html
 │   ├── vite.config.js
 │   └── package.json
 ├── database/                    # Scripts DDL y datos de prueba
-│   ├── schema.sql
-│   └── seed.sql
-├── tests/                       # Pruebas automatizadas (Jest)
-│   ├── api.test.js
+│   ├── schema.sql               # Esquema DDL con tablas, vistas e índices
+│   └── seed.sql                 # Datos de prueba iniciales
+├── tests/                       # Pruebas automatizadas (Node Test Runner)
+│   ├── api.test.js              # 7 pruebas unitarias e integración en verde
 │   └── package.json
 ├── devops/                      # Configuración de contenedores y utilidades
 │   ├── Dockerfile.backend
@@ -67,11 +85,13 @@ incident-hub/
 │   ├── docker-compose.yml
 │   └── switch-git-user.ps1
 ├── docs/                        # Documentación técnica obligatoria
-│   ├── arquitectura.md
-│   ├── branching.md
-│   ├── deuda_tecnica.md
-│   ├── seguridad.md
-│   └── release_strategy.md
+│   ├── arquitectura.md          # Arquitectura de componentes y datos
+│   ├── branching.md             # Estrategia de ramas (GitFlow adaptado)
+│   ├── deuda_tecnica.md         # Catálogo de 5 deudas técnicas y resolución de 2
+│   ├── fallo_controlado.md      # Evidencia y análisis de causa raíz del fallo de CI
+│   ├── guia_capturas.md         # Lista oficial de capturas para la documentación final
+│   ├── release_strategy.md      # Estrategia de ambientes (Dev -> Staging -> Prod) y SemVer
+│   └── seguridad.md             # Matriz de dependencias y política de cero secretos
 ├── azure-pipelines.yml          # Pipeline principal de Azure DevOps
 ├── .gitignore
 └── README.md
@@ -86,7 +106,6 @@ incident-hub/
 * PostgreSQL 14+ (o Docker Desktop)
 
 ### 1. Base de Datos
-Ejecutar los scripts de inicialización en PostgreSQL:
 ```bash
 psql -U postgres -d postgres -f database/schema.sql
 psql -U postgres -d incident_hub_db -f database/seed.sql
@@ -108,16 +127,15 @@ npm run dev
 # Aplicación web disponible en http://localhost:5173
 ```
 
-### 4. Pruebas Unitarias
+### 4. Pruebas Unitarias Automatizadas
 ```bash
-cd tests
-npm install
-npm test
+node --test tests/api.test.js
+# 7 pruebas pasando en verde (100% de éxito)
 ```
 
 ---
 
 ## 📌 Trazabilidad con Azure Boards
-Cada commit y Pull Request en este repositorio está vinculado a un Work Item en Azure Boards mediante la sintaxis `AB#ID`.
-Para consultar el tablero completo de trabajo, visite:
+Cada commit, Pull Request y pipeline en este proyecto está estrictamente vinculado a un Work Item en Azure Boards mediante la sintaxis `AB#ID`.
+Para consultar el tablero completo de trabajo, visite:  
 👉 [Azure Boards - IT Incident Hub](https://dev.azure.com/DevOps-UMG-Mayro/incident-hub/_boards)
